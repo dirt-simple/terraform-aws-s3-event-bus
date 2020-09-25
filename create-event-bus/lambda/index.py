@@ -10,10 +10,10 @@ event_bus_topic_arn = os.environ['S3_EVENT_BUS_TOPIC_ARN']
 def handler(event, context):
     for record in event['Records']:
         try:
-            message_id = sns_client.publish(
-                TopicArn=event_bus_topic_arn,
-                Message=json.dumps(record),
-                MessageAttributes={
+            key = record['s3']['object']['key']
+            filename, ext = os.path.splitext(os.path.basename(key))
+
+            attributes = {
                     'event': {
                         'DataType': 'String',
                         'StringValue': record['eventName']
@@ -32,9 +32,17 @@ def handler(event, context):
                     },
                     'filename': {
                         'DataType': 'String',
-                        'StringValue': os.path.basename(record['s3']['object']['key'])
+                        'StringValue': filename
                     }
                 }
+
+            if ext:
+                attributes.update({'ext': {'DataType': 'String', 'StringValue': ext}})
+
+            message_id = sns_client.publish(
+                TopicArn=event_bus_topic_arn,
+                Message=json.dumps(record),
+                MessageAttributes=attributes
             )
             print(message_id)
 
