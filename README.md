@@ -6,7 +6,7 @@
   
 It is only a matter of time before you step in some poo if you use the built-in S3 event notifications. There is a better way.  
 
-The most massive problem is how the AWS API manages updates to the built-in S3 event notification configuration. According to the AWS API documentation, the [PutBucketNotificationConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketNotificationConfiguration.html) endpoint does the following “This operation replaces the existing notification configuration with the configuration you include in the request body.”
+The most massive problem with S3 event notifications is how the AWS API manages updates to the configuration. According to the AWS API documentation, the [PutBucketNotificationConfiguration](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketNotificationConfiguration.html) endpoint does the following “This operation replaces the existing notification configuration with the configuration you include in the request body.”
   
 The Terraform docs warn: “S3 Buckets only support a single notification configuration. Declaring multiple [aws_s3_bucket_notification](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_notification) resources to the same S3 bucket will cause a perpetual difference in configuration.”  
 
