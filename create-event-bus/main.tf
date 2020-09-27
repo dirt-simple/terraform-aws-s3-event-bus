@@ -93,3 +93,10 @@ resource aws_cloudwatch_log_group lambda {
   tags = var.tags
 }
 
+output s3_event_bus_topic_arn {
+  value = aws_sns_topic.event_bus_topic.arn
+}
+
+output s3_event_bus_topic_name {
+  value = aws_sns_topic.event_bus_topic.name
+}
