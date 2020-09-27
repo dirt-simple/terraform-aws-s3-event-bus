@@ -29,9 +29,19 @@ There are two Terraform modules. The first Terraform module consists of a Lambda
 module event_bus {
     source = "github.com/dirt-simple/terraform-aws-s3-event-bus/create-event-bus"
 }
+
+output s3_event_bus_topic_name {
+  value = module.event_bus.s3_event_bus_topic_name
+}
+
+output s3_event_bus_topic_arn {
+  value = module.event_bus.s3_event_bus_topic_arn
+}
+
 ```
   
 The Lambda and SNS Topic will be named “dirt-simple-s3-event-bus.”  
+
 The second Terraform module is responsible for configuring the event notifications for a single S3 bucket.  
 
 ```
